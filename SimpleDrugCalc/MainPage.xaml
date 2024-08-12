@@ -1,0 +1,502 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleDrugCalc.MainPage"
+             BackgroundColor="{StaticResource DarkBackgroundColor}">
+
+    <!-- StackLayout for vertical stacking -->
+    <StackLayout Loaded="OnPageLoaded">
+
+        <!-- Title Label outside of the Grid -->
+        <Label
+            Text="Simple Drug Calc"
+            HorizontalOptions="Center"
+            FontSize="28"
+            FontAttributes="Bold"
+            TextColor="{StaticResource DarkPrimaryColor}"
+            Margin="0,0,0,0" />
+
+        <!-- Grid for input content -->
+        <Grid
+            RowDefinitions="auto, auto, auto, auto, auto, auto, auto"
+            ColumnDefinitions="1*, 0.5*, 0.5*, 0.50*"
+            Margin="5,10,5,0"
+            RowSpacing="10"
+            BackgroundColor="{StaticResource DarkBorderColor}">
+            
+            <!-- Title Bar -->
+            <Label
+                Grid.Row="0" Grid.Column="1"
+                Text="Value"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                TextColor="{StaticResource DarkTextColor}"
+                Margin="0,10,0,0"/>
+
+            <Label
+                Grid.Row="0" Grid.Column="2"
+                Text="Unit"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                TextColor="{StaticResource DarkTextColor}"
+                Margin="0,10,0,0"/>
+
+            <Label
+                Grid.Row="0" Grid.Column="3"
+                Text="Enabled"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                TextColor="{StaticResource DarkTextColor}"
+                Margin="0,10,0,0"/>
+
+            <!-- Patient Weight -->
+            <Label
+                Grid.Row="1" Grid.Column="0"
+                Text="Patient Weight"
+                HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                Margin="10,0,0,0"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Entry
+                x:Name="PatientWeight"
+				Grid.Row="1" Grid.Column="1"
+                Placeholder="Empty"
+                HorizontalTextAlignment="End" VerticalTextAlignment="Center"
+                TextChanged="OnInputChanged"
+                Keyboard="Numeric"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Picker 
+                x:Name="PatientWeightUnit"
+                Grid.Row="1" Grid.Column="2"
+                Title="Unit(s)"
+                HorizontalTextAlignment="End"
+                SelectedIndexChanged="OnInputChanged"
+                TextColor="{StaticResource DarkTextColor}">
+
+                <Picker.Items>
+                    <x:String>kg</x:String>
+                    <x:String>lb</x:String>
+                    <x:String>st</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <CheckBox
+                Grid.Row="1" Grid.Column="3"
+                x:Name="CheckboxWeightEnabled"
+                Color="{StaticResource DarkErrorColor}"
+                CheckedChanged="OnInputChanged"/>
+
+            <!-- Concentration Mass -->
+            <Label
+				Grid.Row="2" Grid.Column="0"
+				Text="Drug Concentration (Mass)" 
+                HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                Margin="10,0,0,0" 
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Entry
+                x:Name="ConcentrationMass"
+				Grid.Row="2" Grid.Column="1"
+                Placeholder="Empty"
+                HorizontalTextAlignment="End" VerticalTextAlignment="Center"
+                TextChanged="OnInputChanged"
+                Keyboard="Numeric"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Picker 
+                x:Name="ConcentrationMassUnit"
+                Grid.Row="2" Grid.Column="2"
+                Title="Unit(s)"
+                HorizontalTextAlignment="End"
+                SelectedIndexChanged="OnInputChanged"
+                TextColor="{StaticResource DarkTextColor}">
+
+                <Picker.Items>
+                    <x:String>g</x:String>
+                    <x:String>mg</x:String>
+                    <x:String>mcg</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <CheckBox
+                Grid.Row="2" Grid.Column="3"
+                IsEnabled="False"
+                IsChecked="True"
+                CheckedChanged="OnInputChanged"
+                Color="{StaticResource DarkNeutralDisabledColor}"/>
+
+            <!-- Concentration Volume -->
+            <Label
+				Grid.Row="3" Grid.Column="0"
+				Text="Drug Concentration (Volume)" 
+                HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                Margin="10,0,0,0" 
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Entry
+                x:Name="ConcentrationVolume"
+				Grid.Row="3" Grid.Column="1"
+                Placeholder="Empty"
+                HorizontalTextAlignment="End" VerticalTextAlignment="Center"
+                TextChanged="OnInputChanged"
+                Keyboard="Numeric"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Picker 
+                x:Name="ConcentrationVolumeUnit"
+                Grid.Row="3" Grid.Column="2"
+                Title="Unit(s)"
+                HorizontalTextAlignment="End"
+                SelectedIndexChanged="OnInputChanged"
+                TextColor="{StaticResource DarkTextColor}">
+
+                <Picker.Items>
+                    <x:String>l</x:String>
+                    <x:String>ml</x:String>
+                    <x:String>cc</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <CheckBox
+                Grid.Row="3" Grid.Column="3"
+                IsEnabled="False"
+                IsChecked="True"
+                CheckedChanged="OnInputChanged"
+                Color="{StaticResource DarkNeutralDisabledColor}"/>
+
+            <!-- Rate Infusion -->
+            <Label 
+                Grid.Row="4" Grid.Column="0"
+                Text="Infusion Rate"
+                HorizontalTextAlignment="Start" VerticalTextAlignment="Center"
+                Margin="10,0,0,0" 
+                TextColor="{StaticResource DarkTextColor}"/>
+            
+            <Grid
+                Grid.Row="4" Grid.Column="1"
+                Grid.ColumnSpan="2"
+                ColumnDefinitions="0.5*, 0.05*, 0.5*">
+
+                <Entry
+                    x:Name="InfusionValue"
+				    Grid.Row="0" Grid.Column="0"
+                    Placeholder="Empty"
+                    HorizontalTextAlignment="End" VerticalTextAlignment="Center"
+                    TextChanged="OnInputChanged"
+                    Keyboard="Numeric"
+                    TextColor="{StaticResource DarkTextColor}"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="1"
+                    Text="/"
+                    HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                    HorizontalOptions="Center" VerticalOptions="Center" 
+                    TextColor="{StaticResource DarkTextColor}"/>
+
+                <Picker 
+                    x:Name="InfusionUnit"
+                    Grid.Row="0" Grid.Column="2"
+                    Title="Unit(s)"
+                    HorizontalTextAlignment="End"
+                    SelectedIndexChanged="OnInputChanged"
+                    TextColor="{StaticResource DarkTextColor}">
+
+                    <Picker.Items>
+                        <x:String>hr</x:String>
+                        <x:String>min</x:String>
+                        <x:String>sec</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+
+            <CheckBox
+                Grid.Row="4" Grid.Column="3"
+                x:Name="CheckboxInfusionEnabled"
+                Color="Red"
+                CheckedChanged="OnInputChanged"/>
+
+            <!-- Dosage -->
+            <Label
+                Grid.Row="5" Grid.Column="0"
+                Text="Input Dose"
+                HorizontalTextAlignment="Start" VerticalTextAlignment="Center" 
+                Margin="10,0,0,0" 
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Entry
+                x:Name="InputDose"
+				Grid.Row="5" Grid.Column="1"
+                Placeholder="Empty"
+                HorizontalTextAlignment="End" VerticalTextAlignment="Center"
+                TextChanged="OnInputChanged"
+                Keyboard="Numeric"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Picker 
+                x:Name="InputDoseUnit"
+                Grid.Row="5" Grid.Column="2"
+                Title="Unit(s)"
+                HorizontalTextAlignment="End"
+                SelectedIndexChanged="OnInputChanged"
+                TextColor="{StaticResource DarkTextColor}">
+
+                <Picker.Items>
+                    <x:String>g</x:String>
+                    <x:String>mg</x:String>
+                    <x:String>mcg</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <CheckBox
+                Grid.Row="5" Grid.Column="4"
+                IsEnabled="False"
+                IsChecked="True"
+                CheckedChanged="OnInputChanged"
+                Color="{StaticResource DarkNeutralDisabledColor}"/>
+        </Grid>
+
+        <!--Grid for output content-->
+        <Grid
+            RowDefinitions="auto, auto, auto, auto"
+            ColumnDefinitions="0.5*"
+            Margin="5,10,5,0"
+            RowSpacing="10" 
+            BackgroundColor="{StaticResource DarkBorderColor}">
+
+            <!-- Total Dose -->
+            <Label
+                Grid.Row="0" Grid.Column="0"
+                Text="Dose Outputs"
+                Margin="10,10,0,0"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Grid
+                Grid.Row="1" Grid.Column="0"
+                Grid.ColumnSpan="1"
+                RowDefinitions="30"
+                ColumnDefinitions="1*, 1*, 1*, 1*, 1*, 1*"
+                Margin="10,0,10,0"
+                RowSpacing="0">
+
+                <Border
+                    Grid.Row="0" Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"
+                    />
+
+                <Label
+                    Grid.Row="0" Grid.Column="0"
+                    Text="Empty"
+                    x:Name="OutputDose_g"
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="1"
+                    Text="g"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Border
+                    Grid.Row="0" Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"
+                    />
+
+                <Label
+                    Grid.Row="0" Grid.Column="2"
+                    Text="Empty" 
+                    x:Name="OutputDose_mg" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="3"
+                    Text="mg"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Border
+                    Grid.Row="0" Grid.Column="4"
+                    Grid.ColumnSpan="2"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"
+                    />
+
+                <Label
+                    Grid.Row="0" Grid.Column="4"
+                    Text="Empty" 
+                    x:Name="OutputDose_mcg" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="5"
+                    Text="mcg"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+            </Grid>
+
+            <Label
+                Grid.Row="2" Grid.Column="0"
+                Text="Volume Outputs"
+                Margin="10,0,0,0"
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Grid
+                Grid.Row="3" Grid.Column="0"
+                Grid.ColumnSpan="1"
+                RowDefinitions="30"
+                ColumnDefinitions="1*, 1*, 1*, 1*, 1*, 1*"
+                Margin="10,0,10,10"
+                RowSpacing="0">
+
+                <!-- Volume Outputs -->
+                <Border
+                    Grid.Row="0" Grid.Column="0"
+                    Stroke="Black"
+                    Grid.ColumnSpan="2"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="0"
+                    Text="Empty" 
+                    x:Name="OutputVolume_l" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="1"
+                    Text="liters"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Border
+                    Grid.Row="0" Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="2"
+                    Text="Empty" 
+                    x:Name="OutputVolume_ml" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="3"
+                    Text="ml"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Border
+                    Grid.Row="0" Grid.Column="4"
+                    Grid.ColumnSpan="2"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="4"
+                    Text="Empty" 
+                    x:Name="OutputVolume_cc" 
+                    HorizontalTextAlignment="End"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+
+                <Label
+                    Grid.Row="0" Grid.Column="5"
+                    Text="cc"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    TextColor="#333333"/>
+            </Grid>
+        </Grid>
+        
+        <!-- Grid for pump content -->
+        <Grid
+            RowDefinitions="30, 30, 30"
+            ColumnDefinitions="0.5*, 0.5*"
+            Margin="5,10,5,0"
+            RowSpacing="10" 
+            BackgroundColor="{StaticResource DarkBorderColor}">
+
+            <Label
+                Grid.Row="0" Grid.Column="0"
+                Text="Pump Outputs"
+                Margin="10,10,0,0" 
+                TextColor="{StaticResource DarkTextColor}"/>
+
+            <Border
+                    Grid.Row="1" Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+            
+            <Label
+                Grid.Row="1" Grid.Column="0"
+                Text="ml/min"
+                Margin="10,0,0,0" 
+                TextColor="#333333"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <Border
+                    Grid.Row="1" Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+            
+            <Label
+                Grid.Row="1" Grid.Column="1"
+                x:Name="OutputPumpMin"
+                Text="n/a"
+                TextColor="#333333"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <Border
+                    Grid.Row="2" Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+            
+            <Label
+                Grid.Row="2" Grid.Column="0"
+                Text="ml/hr"
+                Margin="10,0,0,0" 
+                TextColor="#333333"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+
+            <Border
+                    Grid.Row="2" Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Stroke="Black"
+                    StrokeThickness="1"
+                    Background="{StaticResource DarkTextColor}"/>
+            
+            <Label
+                Grid.Row="2" Grid.Column="1"
+                x:Name="OutputPumpHour"
+                Text="n/a"
+                TextColor="#333333"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+        </Grid>
+    </StackLayout>
+</ContentPage>
